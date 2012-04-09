@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, DrawIcons!</string>
+    <string name="app_name">Draw icons on map</string>
+    <string name="map_api_key">0yHD6ZN1qFBdgZeaheHKTxkbf2Hxz2mJHPJxTOA</string>
+</resources>

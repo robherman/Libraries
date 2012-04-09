@@ -1,0 +1,9 @@
+
+/Android/GreenDroid/bin
+/Android/GreenDroidMaps/bin
+/Android/MapViewBalloons/bin
+/dotNET/LoggerService/bin
+/dotNET/LoggerService/obj
+/dotNET/DataAccess/bin
+/dotNET/DataAccess/obj
+*.class
