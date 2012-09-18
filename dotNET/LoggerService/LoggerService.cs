@@ -10,7 +10,7 @@ namespace SouthApps.Framework.LoggerService
     public static class LoggerService
     {
         private static FileStream FileStream;
-        private static TextWriterTraceListener TraceListener;
+        private static StreamWriter TraceListener;
         private static LogLevel CurrentLogLevel;
         private static bool Initialized;
 
@@ -19,11 +19,8 @@ namespace SouthApps.Framework.LoggerService
             if (!LoggerService.Initialized)
             {
                 LoggerService.FileStream = new FileStream(logPath, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-                LoggerService.TraceListener = new TextWriterTraceListener(LoggerService.FileStream);
-                Trace.AutoFlush = true;
-                Trace.UseGlobalLock = true;
-                Trace.Listeners.Add(LoggerService.TraceListener);
-                Trace.Listeners.Remove("Default");
+                LoggerService.TraceListener = new StreamWriter(LoggerService.FileStream);
+                TraceListener.AutoFlush = true;
                 LogLevel level = (LogLevel)Enum.Parse(typeof(LogLevel), logLevel, true);
                 LoggerService.CurrentLogLevel = level;
 
@@ -41,7 +38,7 @@ namespace SouthApps.Framework.LoggerService
             if (LoggerService.LevelEnabled(logLevel))
             {
                 string header = DateTime.Now.ToString() + ": " + logLevel.ToString() + " - ";
-                Trace.WriteLine(header + FormatLogParameters(message, logParameters) + (ex != null ? "Exception: " + ex.Message + ex.StackTrace : ""));
+                TraceListener.WriteLine(header + FormatLogParameters(message, logParameters) + (ex != null ? "Exception: " + ex.Message + ex.StackTrace : ""));
             }
         }
 
