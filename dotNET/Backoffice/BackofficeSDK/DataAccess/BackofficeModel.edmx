@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BackofficeModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="BackofficeModelStoreContainer">
+          <EntitySet Name="bo_module" EntityType="BackofficeModel.Store.bo_module" store:Type="Tables" Schema="mobilehealth" />
+          <EntitySet Name="bo_module_permission" EntityType="BackofficeModel.Store.bo_module_permission" store:Type="Tables" Schema="mobilehealth" />
+          <EntitySet Name="bo_permission" EntityType="BackofficeModel.Store.bo_permission" store:Type="Tables" Schema="mobilehealth" />
+          <EntitySet Name="bo_role" EntityType="BackofficeModel.Store.bo_role" store:Type="Tables" Schema="mobilehealth" />
+          <EntitySet Name="bo_role_permission" EntityType="BackofficeModel.Store.bo_role_permission" store:Type="Tables" Schema="mobilehealth" />
+          <EntitySet Name="bo_user" EntityType="BackofficeModel.Store.bo_user" store:Type="Tables" Schema="mobilehealth" />
+          <EntitySet Name="bo_user_permission" EntityType="BackofficeModel.Store.bo_user_permission" store:Type="Tables" Schema="mobilehealth" />
+          <AssociationSet Name="modulepermission_module" Association="BackofficeModel.Store.modulepermission_module">
+            <End Role="bo_module" EntitySet="bo_module" />
+            <End Role="bo_module_permission" EntitySet="bo_module_permission" />
+          </AssociationSet>
+          <AssociationSet Name="modulepermission_permission" Association="BackofficeModel.Store.modulepermission_permission">
+            <End Role="bo_permission" EntitySet="bo_permission" />
+            <End Role="bo_module_permission" EntitySet="bo_module_permission" />
+          </AssociationSet>
+          <AssociationSet Name="rolepermission_modulepermission" Association="BackofficeModel.Store.rolepermission_modulepermission">
+            <End Role="bo_module_permission" EntitySet="bo_module_permission" />
+            <End Role="bo_role_permission" EntitySet="bo_role_permission" />
+          </AssociationSet>
+          <AssociationSet Name="rolepermission_role" Association="BackofficeModel.Store.rolepermission_role">
+            <End Role="bo_role" EntitySet="bo_role" />
+            <End Role="bo_role_permission" EntitySet="bo_role_permission" />
+          </AssociationSet>
+          <AssociationSet Name="user_role" Association="BackofficeModel.Store.user_role">
+            <End Role="bo_role" EntitySet="bo_role" />
+            <End Role="bo_user" EntitySet="bo_user" />
+          </AssociationSet>
+          <AssociationSet Name="userpermission_modulepermission" Association="BackofficeModel.Store.userpermission_modulepermission">
+            <End Role="bo_module_permission" EntitySet="bo_module_permission" />
+            <End Role="bo_user_permission" EntitySet="bo_user_permission" />
+          </AssociationSet>
+          <AssociationSet Name="userpermission_user" Association="BackofficeModel.Store.userpermission_user">
+            <End Role="bo_user" EntitySet="bo_user" />
+            <End Role="bo_user_permission" EntitySet="bo_user_permission" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="bo_module">
+          <Key>
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="moduleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="bo_module_permission">
+          <Key>
+            <PropertyRef Name="modulePermissionId" />
+          </Key>
+          <Property Name="modulePermissionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="permissionId" Type="int" Nullable="false" />
+          <Property Name="moduleId" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="bo_permission">
+          <Key>
+            <PropertyRef Name="permissionId" />
+          </Key>
+          <Property Name="permissionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="bo_role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="bo_role_permission">
+          <Key>
+            <PropertyRef Name="rolePermissionId" />
+          </Key>
+          <Property Name="rolePermissionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="modulePermissionId" Type="int" Nullable="false" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bo_user">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="username" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="comment" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" Nullable="false" MaxLength="128" />
+          <Property Name="lastActivityDate" Type="datetime" />
+          <Property Name="lastLoginDate" Type="datetime" />
+          <Property Name="lastPasswordChangedDate" Type="datetime" />
+          <Property Name="creationDate" Type="datetime" />
+          <Property Name="isLockedOut" Type="bool" />
+          <Property Name="lastLockedOutDate" Type="datetime" />
+          <Property Name="failedPasswordAttemptCount" Type="uint" />
+          <Property Name="failedPasswordAttemptWindowStart" Type="datetime" />
+          <Property Name="failedPasswordAnswerAttemptCount" Type="uint" />
+          <Property Name="failedPasswordAnswerAttemptWindowStart" Type="datetime" />
+          <Property Name="entityId" Type="int" />
+          <Property Name="roleId" Type="int" Nullable="false" />
+          <Property Name="admin" Type="bool" Nullable="false" />
+          <Property Name="active" Type="bool" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bo_user_permission">
+          <Key>
+            <PropertyRef Name="userPermissionId" />
+          </Key>
+          <Property Name="userPermissionId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="modulePermissionId" Type="int" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="modulepermission_module">
+          <End Role="bo_module" Type="BackofficeModel.Store.bo_module" Multiplicity="1" />
+          <End Role="bo_module_permission" Type="BackofficeModel.Store.bo_module_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="bo_module_permission">
+              <PropertyRef Name="moduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="modulepermission_permission">
+          <End Role="bo_permission" Type="BackofficeModel.Store.bo_permission" Multiplicity="1" />
+          <End Role="bo_module_permission" Type="BackofficeModel.Store.bo_module_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_permission">
+              <PropertyRef Name="permissionId" />
+            </Principal>
+            <Dependent Role="bo_module_permission">
+              <PropertyRef Name="permissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rolepermission_modulepermission">
+          <End Role="bo_module_permission" Type="BackofficeModel.Store.bo_module_permission" Multiplicity="1" />
+          <End Role="bo_role_permission" Type="BackofficeModel.Store.bo_role_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_module_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Principal>
+            <Dependent Role="bo_role_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rolepermission_role">
+          <End Role="bo_role" Type="BackofficeModel.Store.bo_role" Multiplicity="1" />
+          <End Role="bo_role_permission" Type="BackofficeModel.Store.bo_role_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bo_role_permission">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_role">
+          <End Role="bo_role" Type="BackofficeModel.Store.bo_role" Multiplicity="1" />
+          <End Role="bo_user" Type="BackofficeModel.Store.bo_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bo_user">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userpermission_modulepermission">
+          <End Role="bo_module_permission" Type="BackofficeModel.Store.bo_module_permission" Multiplicity="1" />
+          <End Role="bo_user_permission" Type="BackofficeModel.Store.bo_user_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_module_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Principal>
+            <Dependent Role="bo_user_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userpermission_user">
+          <End Role="bo_user" Type="BackofficeModel.Store.bo_user" Multiplicity="1" />
+          <End Role="bo_user_permission" Type="BackofficeModel.Store.bo_user_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="bo_user_permission">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BackofficeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="BackofficeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Modules" EntityType="BackofficeModel.Module" />
+          <EntitySet Name="Module_Permission" EntityType="BackofficeModel.Module_Permission" />
+          <EntitySet Name="Permissions" EntityType="BackofficeModel.Permission" />
+          <EntitySet Name="Roles" EntityType="BackofficeModel.Role" />
+          <EntitySet Name="RolePermissions" EntityType="BackofficeModel.RolePermission" />
+          <EntitySet Name="Users" EntityType="BackofficeModel.User" />
+          <EntitySet Name="UserPermissions" EntityType="BackofficeModel.UserPermission" />
+          <AssociationSet Name="modulepermission_module" Association="BackofficeModel.modulepermission_module">
+            <End Role="bo_module" EntitySet="Modules" />
+            <End Role="bo_module_permission" EntitySet="Module_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="modulepermission_permission" Association="BackofficeModel.modulepermission_permission">
+            <End Role="bo_permission" EntitySet="Permissions" />
+            <End Role="bo_module_permission" EntitySet="Module_Permission" />
+          </AssociationSet>
+          <AssociationSet Name="rolepermission_modulepermission" Association="BackofficeModel.rolepermission_modulepermission">
+            <End Role="bo_module_permission" EntitySet="Module_Permission" />
+            <End Role="bo_role_permission" EntitySet="RolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="userpermission_modulepermission" Association="BackofficeModel.userpermission_modulepermission">
+            <End Role="bo_module_permission" EntitySet="Module_Permission" />
+            <End Role="bo_user_permission" EntitySet="UserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="rolepermission_role" Association="BackofficeModel.rolepermission_role">
+            <End Role="bo_role" EntitySet="Roles" />
+            <End Role="bo_role_permission" EntitySet="RolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="user_role" Association="BackofficeModel.user_role">
+            <End Role="bo_role" EntitySet="Roles" />
+            <End Role="bo_user" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="userpermission_user" Association="BackofficeModel.userpermission_user">
+            <End Role="bo_user" EntitySet="Users" />
+            <End Role="bo_user_permission" EntitySet="UserPermissions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="moduleId" />
+          </Key>
+          <Property Name="moduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="bo_module_permission" Relationship="BackofficeModel.modulepermission_module" FromRole="bo_module" ToRole="bo_module_permission" />
+        </EntityType>
+        <EntityType Name="Module_Permission">
+          <Key>
+            <PropertyRef Name="modulePermissionId" />
+          </Key>
+          <Property Name="modulePermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="permissionId" Type="Int32" Nullable="false" />
+          <Property Name="moduleId" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" />
+          <NavigationProperty Name="bo_module" Relationship="BackofficeModel.modulepermission_module" FromRole="bo_module_permission" ToRole="bo_module" />
+          <NavigationProperty Name="bo_permission" Relationship="BackofficeModel.modulepermission_permission" FromRole="bo_module_permission" ToRole="bo_permission" />
+          <NavigationProperty Name="bo_role_permission" Relationship="BackofficeModel.rolepermission_modulepermission" FromRole="bo_module_permission" ToRole="bo_role_permission" />
+          <NavigationProperty Name="bo_user_permission" Relationship="BackofficeModel.userpermission_modulepermission" FromRole="bo_module_permission" ToRole="bo_user_permission" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="permissionId" />
+          </Key>
+          <Property Name="permissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="bo_module_permission" Relationship="BackofficeModel.modulepermission_permission" FromRole="bo_permission" ToRole="bo_module_permission" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <NavigationProperty Name="bo_role_permission" Relationship="BackofficeModel.rolepermission_role" FromRole="bo_role" ToRole="bo_role_permission" />
+          <NavigationProperty Name="bo_user" Relationship="BackofficeModel.user_role" FromRole="bo_role" ToRole="bo_user" />
+        </EntityType>
+        <EntityType Name="RolePermission">
+          <Key>
+            <PropertyRef Name="rolePermissionId" />
+          </Key>
+          <Property Name="rolePermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modulePermissionId" Type="Int32" Nullable="false" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="bo_module_permission" Relationship="BackofficeModel.rolepermission_modulepermission" FromRole="bo_role_permission" ToRole="bo_module_permission" />
+          <NavigationProperty Name="bo_role" Relationship="BackofficeModel.rolepermission_role" FromRole="bo_role_permission" ToRole="bo_role" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" />
+          <Property Name="username" Type="String" />
+          <Property Name="email" Type="String" />
+          <Property Name="comment" Type="String" />
+          <Property Name="password" Type="String" Nullable="false" />
+          <Property Name="lastActivityDate" Type="DateTime" />
+          <Property Name="lastLoginDate" Type="DateTime" />
+          <Property Name="lastPasswordChangedDate" Type="DateTime" />
+          <Property Name="creationDate" Type="DateTime" />
+          <Property Name="isLockedOut" Type="Boolean" />
+          <Property Name="lastLockedOutDate" Type="DateTime" />
+          <Property Name="failedPasswordAttemptCount" Type="Int64" />
+          <Property Name="failedPasswordAttemptWindowStart" Type="DateTime" />
+          <Property Name="failedPasswordAnswerAttemptCount" Type="Int64" />
+          <Property Name="failedPasswordAnswerAttemptWindowStart" Type="DateTime" />
+          <Property Name="entityId" Type="Int32" />
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <Property Name="admin" Type="Boolean" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="bo_role" Relationship="BackofficeModel.user_role" FromRole="bo_user" ToRole="bo_role" />
+          <NavigationProperty Name="bo_user_permission" Relationship="BackofficeModel.userpermission_user" FromRole="bo_user" ToRole="bo_user_permission" />
+        </EntityType>
+        <EntityType Name="UserPermission">
+          <Key>
+            <PropertyRef Name="userPermissionId" />
+          </Key>
+          <Property Name="userPermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modulePermissionId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="bo_module_permission" Relationship="BackofficeModel.userpermission_modulepermission" FromRole="bo_user_permission" ToRole="bo_module_permission" />
+          <NavigationProperty Name="bo_user" Relationship="BackofficeModel.userpermission_user" FromRole="bo_user_permission" ToRole="bo_user" />
+        </EntityType>
+        <Association Name="modulepermission_module">
+          <End Role="bo_module" Type="BackofficeModel.Module" Multiplicity="1" />
+          <End Role="bo_module_permission" Type="BackofficeModel.Module_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_module">
+              <PropertyRef Name="moduleId" />
+            </Principal>
+            <Dependent Role="bo_module_permission">
+              <PropertyRef Name="moduleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="modulepermission_permission">
+          <End Role="bo_permission" Type="BackofficeModel.Permission" Multiplicity="1" />
+          <End Role="bo_module_permission" Type="BackofficeModel.Module_Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_permission">
+              <PropertyRef Name="permissionId" />
+            </Principal>
+            <Dependent Role="bo_module_permission">
+              <PropertyRef Name="permissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rolepermission_modulepermission">
+          <End Role="bo_module_permission" Type="BackofficeModel.Module_Permission" Multiplicity="1" />
+          <End Role="bo_role_permission" Type="BackofficeModel.RolePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_module_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Principal>
+            <Dependent Role="bo_role_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userpermission_modulepermission">
+          <End Role="bo_module_permission" Type="BackofficeModel.Module_Permission" Multiplicity="1" />
+          <End Role="bo_user_permission" Type="BackofficeModel.UserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_module_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Principal>
+            <Dependent Role="bo_user_permission">
+              <PropertyRef Name="modulePermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="rolepermission_role">
+          <End Role="bo_role" Type="BackofficeModel.Role" Multiplicity="1" />
+          <End Role="bo_role_permission" Type="BackofficeModel.RolePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bo_role_permission">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_role">
+          <End Role="bo_role" Type="BackofficeModel.Role" Multiplicity="1" />
+          <End Role="bo_user" Type="BackofficeModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bo_user">
+              <PropertyRef Name="roleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userpermission_user">
+          <End Role="bo_user" Type="BackofficeModel.User" Multiplicity="1" />
+          <End Role="bo_user_permission" Type="BackofficeModel.UserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="bo_user">
+              <PropertyRef Name="userId" />
+            </Principal>
+            <Dependent Role="bo_user_permission">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BackofficeModelStoreContainer" CdmEntityContainer="BackofficeEntities">
+          <EntitySetMapping Name="Modules"><EntityTypeMapping TypeName="BackofficeModel.Module"><MappingFragment StoreEntitySet="bo_module">
+            <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+            <ScalarProperty Name="name" ColumnName="name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Module_Permission"><EntityTypeMapping TypeName="BackofficeModel.Module_Permission"><MappingFragment StoreEntitySet="bo_module_permission">
+            <ScalarProperty Name="modulePermissionId" ColumnName="modulePermissionId" />
+            <ScalarProperty Name="permissionId" ColumnName="permissionId" />
+            <ScalarProperty Name="moduleId" ColumnName="moduleId" />
+            <ScalarProperty Name="url" ColumnName="url" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Permissions"><EntityTypeMapping TypeName="BackofficeModel.Permission"><MappingFragment StoreEntitySet="bo_permission">
+            <ScalarProperty Name="permissionId" ColumnName="permissionId" />
+            <ScalarProperty Name="name" ColumnName="name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Roles"><EntityTypeMapping TypeName="BackofficeModel.Role"><MappingFragment StoreEntitySet="bo_role">
+            <ScalarProperty Name="id" ColumnName="id" />
+            <ScalarProperty Name="name" ColumnName="name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="RolePermissions"><EntityTypeMapping TypeName="BackofficeModel.RolePermission"><MappingFragment StoreEntitySet="bo_role_permission">
+            <ScalarProperty Name="rolePermissionId" ColumnName="rolePermissionId" />
+            <ScalarProperty Name="modulePermissionId" ColumnName="modulePermissionId" />
+            <ScalarProperty Name="roleId" ColumnName="roleId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="BackofficeModel.User"><MappingFragment StoreEntitySet="bo_user">
+            <ScalarProperty Name="userId" ColumnName="userId" />
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="username" ColumnName="username" />
+            <ScalarProperty Name="email" ColumnName="email" />
+            <ScalarProperty Name="comment" ColumnName="comment" />
+            <ScalarProperty Name="password" ColumnName="password" />
+            <ScalarProperty Name="lastActivityDate" ColumnName="lastActivityDate" />
+            <ScalarProperty Name="lastLoginDate" ColumnName="lastLoginDate" />
+            <ScalarProperty Name="lastPasswordChangedDate" ColumnName="lastPasswordChangedDate" />
+            <ScalarProperty Name="creationDate" ColumnName="creationDate" />
+            <ScalarProperty Name="isLockedOut" ColumnName="isLockedOut" />
+            <ScalarProperty Name="lastLockedOutDate" ColumnName="lastLockedOutDate" />
+            <ScalarProperty Name="failedPasswordAttemptCount" ColumnName="failedPasswordAttemptCount" />
+            <ScalarProperty Name="failedPasswordAttemptWindowStart" ColumnName="failedPasswordAttemptWindowStart" />
+            <ScalarProperty Name="failedPasswordAnswerAttemptCount" ColumnName="failedPasswordAnswerAttemptCount" />
+            <ScalarProperty Name="failedPasswordAnswerAttemptWindowStart" ColumnName="failedPasswordAnswerAttemptWindowStart" />
+            <ScalarProperty Name="entityId" ColumnName="entityId" />
+            <ScalarProperty Name="roleId" ColumnName="roleId" />
+            <ScalarProperty Name="admin" ColumnName="admin" />
+            <ScalarProperty Name="active" ColumnName="active" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserPermissions"><EntityTypeMapping TypeName="BackofficeModel.UserPermission"><MappingFragment StoreEntitySet="bo_user_permission">
+            <ScalarProperty Name="userPermissionId" ColumnName="userPermissionId" />
+            <ScalarProperty Name="modulePermissionId" ColumnName="modulePermissionId" />
+            <ScalarProperty Name="userId" ColumnName="userId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BackofficeModel">
+        <EntityTypeShape EntityType="BackofficeModel.Module" Width="1.5" PointX="0.75" PointY="4" Height="1.59568359375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BackofficeModel.Module_Permission" Width="1.5" PointX="3" PointY="3.5" Height="2.5571907552083322" IsExpanded="true" />
+        <EntityTypeShape EntityType="BackofficeModel.Permission" Width="1.5" PointX="0.75" PointY="1" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="BackofficeModel.Role" Width="1.5" PointX="0.75" PointY="9.5" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="BackofficeModel.RolePermission" Width="1.5" PointX="5.25" PointY="3.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="BackofficeModel.User" Width="1.5" PointX="3" PointY="7.75" Height="5.2494108072916674" IsExpanded="true" />
+        <EntityTypeShape EntityType="BackofficeModel.UserPermission" Width="1.5" PointX="5.25" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
+        <AssociationConnector Association="BackofficeModel.modulepermission_module" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="4.797841796875" />
+          <ConnectorPoint PointX="3" PointY="4.797841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="BackofficeModel.modulepermission_permission" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="3.75" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="3.75" PointY="3.5" />
+        </AssociationConnector>
+        <AssociationConnector Association="BackofficeModel.rolepermission_modulepermission" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="4.7401432291666659" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="4.740143229166665" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="4.7401432291666659" />
+          <ConnectorPoint PointX="5.25" PointY="4.7401432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="BackofficeModel.userpermission_modulepermission" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.1562525" PointY="3.5" />
+          <ConnectorPoint PointX="4.1562525" PointY="1.2739208984375" />
+          <ConnectorPoint PointX="5.25" PointY="1.2739208984375" />
+        </AssociationConnector>
+        <AssociationConnector Association="BackofficeModel.rolepermission_role" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="10.393992513020834" />
+          <ConnectorPoint PointX="2.75" PointY="10.393992513020834" />
+          <ConnectorPoint PointX="2.75" PointY="7.5" />
+          <ConnectorPoint PointX="4.666666666666667" PointY="7.4999999999999991" />
+          <ConnectorPoint PointX="4.833333333333333" PointY="7.5" />
+          <ConnectorPoint PointX="6" PointY="7.5" />
+          <ConnectorPoint PointX="6" PointY="5.7302864583333317" />
+        </AssociationConnector>
+        <AssociationConnector Association="BackofficeModel.user_role" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.8844962565104169" />
+          <ConnectorPoint PointX="2.6666666666666665" PointY="9.8844962565104169" />
+          <ConnectorPoint PointX="2.8333333333333335" PointY="9.8844962565104169" />
+          <ConnectorPoint PointX="3" PointY="9.8844962565104169" />
+        </AssociationConnector>
+        <AssociationConnector Association="BackofficeModel.userpermission_user" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="7.75" />
+          <ConnectorPoint PointX="4.875" PointY="7.375" />
+          <ConnectorPoint PointX="4.875" PointY="2.0333556783854165" />
+          <ConnectorPoint PointX="5.25" PointY="2.0333556783854165" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
