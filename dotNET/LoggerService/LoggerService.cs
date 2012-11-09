@@ -38,7 +38,7 @@ namespace SouthApps.Framework.LoggerService
             if (LoggerService.LevelEnabled(logLevel))
             {
                 string header = DateTime.Now.ToString() + ": " + logLevel.ToString() + " - ";
-                TraceListener.WriteLine(header + FormatLogParameters(message, logParameters) + (ex != null ? "Exception: " + ex.Message + ex.StackTrace : ""));
+                TraceListener.WriteLine(header + FormatLogParameters(message, logParameters) + (ex != null ? "Exception: " + ex.Message + (ex.StackTrace!=null? ex.StackTrace : "") : ""));
             }
         }
 
